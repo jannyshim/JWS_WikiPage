@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ReactPaginate from "react-paginate";
 import dummyWiki from "../dummyList";
@@ -18,12 +18,16 @@ const Main = () => {
     navigate(`/wikipage/${id}`);
   };
 
+  const handleAddButton = () => {
+    navigate(`/newwiki`);
+  };
+
   return (
     <WikiContainer>
       <AddWiki className="adding">
-        <Link to="/newwiki" className="link">
-          추가
-        </Link>
+        <button onClick={handleAddButton} className="add-button">
+          ➕추가
+        </button>
       </AddWiki>
       <ContentContainer>
         {displayedDatas.map((data) => (
@@ -34,8 +38,10 @@ const Main = () => {
       </ContentContainer>
       <PaginateContainer>
         <ReactPaginate
-          previousLabel={"<"}
-          nextLabel={">"}
+          previousLabel="◀︎이전"
+          nextLabel="다음▶︎"
+          previousClassName={"previous"}
+          nextClassName={"next"}
           breakLabel={"..."}
           breakClassName={"break-me"}
           pageCount={Math.ceil(dummyWiki.length / itemsPerPage)}
@@ -52,17 +58,49 @@ const Main = () => {
 };
 
 const WikiContainer = styled.div``;
-const AddWiki = styled.div``;
-const ContentContainer = styled.div``;
-const WikiTitle = styled.div``;
-const PaginateContainer = styled.div`
-  a {
-    width: 26px;
+const AddWiki = styled.div`
+  float: right;
+  margin-right: 50px;
+  .add-button {
+    color: #2f4f4f;
+    font-size: 16px;
+    width: 60px;
+    border: 1px solid #a9a9a9;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+      background-color: #a9a9a9;
+      transition: all 0.5s;
+    }
   }
+`;
+const ContentContainer = styled.div`
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
+`;
+const WikiTitle = styled.div`
+  width: 70%;
+  padding: 20px 0 5px 10px;
+  border-bottom: 1px solid rgba(169, 169, 169, 0.3);
+  &:hover {
+    background-color: rgba(169, 169, 169, 0.3);
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+`;
+const PaginateContainer = styled.div`
   .page-item {
     width: 30px;
     height: 30px;
     border: 1px solid #a9a9a9;
+    border-radius: 4px;
     display: flex;
     justify-content: center;
     padding: 1px;
@@ -71,25 +109,34 @@ const PaginateContainer = styled.div`
     text-align: center;
     cursor: pointer;
     &:hover {
-      background-color: #6667ab;
+      background-color: #66cdaa;
       transition: all 0.5s;
     }
   }
+  .previous {
+    padding-top: 5px;
+    margin-right: 10px;
+  }
+  .next {
+    padding-top: 5px;
+    margin-left: 7px;
+  }
   .break-me {
-    color: #6667ab;
+    color: #66cdaa;
   }
   .active {
-    color: #fcc72c;
-    background-color: #6667ab;
+    color: #ffe4e1;
+    background-color: #66cdaa;
     display: flex;
     justify-content: center;
   }
   .pagination {
     display: flex;
     justify-content: center;
+    list-style-type: none;
     margin-top: 30px;
     margin-bottom: 30px;
-    color: #251749;
+    color: #2f4f4f;
   }
 `;
 export default Main;
