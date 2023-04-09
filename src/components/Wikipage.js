@@ -124,15 +124,37 @@ const TitleWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
   width: 70%;
-  padding: 20px 10px 5px 10px;
+  padding: 20px 10px 60px 10px;
   font-size: 16px;
   line-height: 1.5;
+  border-bottom: 1px solid rgba(169, 169, 169, 0.3);
+  a {
+    color: #2f4f4f;
+  }
+  a:link {
+    background: #ffe4e1;
+  }
+  a:hover {
+    background: #66cdaa;
+    transition: 0.5s;
+  }
 `;
 const RelatedTitles = styled.div`
   margin-top: 2rem;
+  margin-left: 0.5rem;
+  padding-top: 1rem;
+  a {
+    color: #2f4f4f;
+  }
+  a:link {
+    background: #ffe4e1;
+  }
+  a:hover {
+    background: #66cdaa;
+    transition: 0.5s;
+  }
 
   h3 {
-    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
 
