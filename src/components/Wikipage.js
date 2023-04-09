@@ -1,17 +1,52 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import parse from "html-react-parser";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import dummyWiki from "../dummyList";
 
 const Wikipage = () => {
   const [datas, setDatas] = useState();
+  const [relatedContents, setRelatedContents] = useState([]);
+  const [relatedTitles, setRelatedTitles] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     const foundData = dummyWiki.find((item) => item.id === Number(id));
     setDatas(foundData);
+    const relatedTitle = dummyWiki
+      .filter(
+        (item) =>
+          item.id !== Number(id) && item.content.includes(foundData.title)
+      )
+      .map((item) => item.title);
+    setRelatedTitles(relatedTitle);
+    const relatedContent = dummyWiki
+      .filter(
+        (item) =>
+          item.id !== Number(id) && foundData.content.includes(item.title)
+      )
+      .map((item) => item.title);
+    setRelatedContents(relatedContent);
   }, [id]);
+
+  const createContentLinks = () => {
+    if (!datas) return "";
+
+    let content = datas.content;
+    let modifiedContent = content;
+    if (relatedContents.length === 0) {
+      return modifiedContent;
+    }
+
+    relatedContents.forEach((relatedContent) => {
+      const relatedId = dummyWiki.find((item) => item.title === relatedContent);
+      const pattern = relatedContent;
+      const link = `<a href="/wikipage/${relatedId.id}">${relatedContent}</a>`;
+      modifiedContent = modifiedContent.replace(pattern, link);
+    });
+    return parse(modifiedContent);
+  };
 
   const handleEditButton = (id) => {
     navigate(`/editwiki/${id}`);
@@ -29,7 +64,25 @@ const Wikipage = () => {
       </EditWiki>
       <WikiContentContainer>
         <TitleWrapper>{datas?.title}</TitleWrapper>
-        <ContentWrapper>{datas?.content}</ContentWrapper>
+        <ContentWrapper>{createContentLinks()}</ContentWrapper>
+        {relatedTitles.length > 0 && (
+          <RelatedTitles>
+            <h3>Related Titles:</h3>
+            <ul>
+              {relatedTitles.map((title) => (
+                <li key={dummyWiki.find((item) => item.title === title).id}>
+                  <Link
+                    to={`/wikipage/${
+                      dummyWiki.find((item) => item.title === title).id
+                    }`}
+                  >
+                    {title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </RelatedTitles>
+        )}
       </WikiContentContainer>
     </WikiPageContainer>
   );
@@ -71,9 +124,26 @@ const TitleWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
   width: 70%;
-  height: 100vh;
   padding: 20px 10px 5px 10px;
   font-size: 16px;
   line-height: 1.5;
+`;
+const RelatedTitles = styled.div`
+  margin-top: 2rem;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
 `;
 export default Wikipage;

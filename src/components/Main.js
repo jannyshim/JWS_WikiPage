@@ -42,6 +42,7 @@ const Main = () => {
           nextLabel="다음▶︎"
           previousClassName={"previous"}
           nextClassName={"next"}
+          pageClassName={"page-item"}
           breakLabel={"..."}
           breakClassName={"break-me"}
           pageCount={Math.ceil(dummyWiki.length / itemsPerPage)}
@@ -50,7 +51,7 @@ const Main = () => {
           onPageChange={(page) => setCurrentPage(page.selected + 1)}
           containerClassName={"pagination"}
           activeClassName={"active"}
-          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
         />
       </PaginateContainer>
     </WikiContainer>
@@ -112,6 +113,17 @@ const PaginateContainer = styled.div`
       background-color: #66cdaa;
       transition: all 0.5s;
     }
+  }
+  .page-link {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2px 2px 0;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
   }
   .previous {
     padding-top: 5px;
