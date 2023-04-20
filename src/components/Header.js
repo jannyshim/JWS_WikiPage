@@ -8,7 +8,7 @@ export default function Header() {
   };
   return (
     <Head>
-      <h1 onClick={handleHeaderClick}>Global Knowledge Wiki Page</h1>
+      <h1 onClick={handleHeaderClick}>My CS Wiki</h1>
     </Head>
   );
 }

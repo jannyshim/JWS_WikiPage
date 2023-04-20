@@ -1,11 +1,11 @@
-# Global Knowledge Wiki Page
+# My CS Wiki
 
-강의와 관련한 지식정보가 담긴 위키 서비스
-더미데이터를 통해 구현했습니다.
+CS와 관련된 자료를 담은 간단한 애플리케이션
+(더미데이터를 통해 구현)
 
 ### 구동 모습
 
-<img src ="https://user-images.githubusercontent.com/110325183/230773912-04dda56e-37c4-418c-a3b7-02d1e37f57c8.gif">
+<img src ="https://user-images.githubusercontent.com/110325183/233238391-720b5646-e5e8-4c91-9434-eb23a6818692.gif">
 
 ### 메인 페이지
 
